@@ -21,7 +21,7 @@ namespace micro_ORM.POCO
 	{
 		[Key]
 		public virtual int ID { get; set; }
-		public virtual int AccountId { get; set; }
+		public virtual int Account_id { get; set; }
 		public virtual string Name { get; set; }
 		public virtual DateTime? DOB { get; set; }
 		public virtual string IdentityCard { get; set; }
