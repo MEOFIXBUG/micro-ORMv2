@@ -21,9 +21,13 @@ namespace _4_ORM.Core
             _dbManager = dBManager;
             currentCommand = SqlQuery.selectSQL(table);
         }
-        private IEnumerable<TEntity> Join<JT>(Tuple<string, string> frontToEnd)
+        public IEnumerable<TEntity> Join<JT>(Tuple<string, string> frontToEnd)
         {
             string joinedTable = typeof(JT).Name;
+            var joinedCommand = string.Format(SqlQuery.selectSQL(joinedTable), "");
+            var data1= _dbManager.Query<JT>(joinedCommand, CommandType.Text);
+            var tableCommand= string.Format(SqlQuery.selectSQL(table), "");
+            var data2=_dbManager.Query<TEntity>(joinedCommand, CommandType.Text);
             //currentCommand += $"JOIN {joinedTable} j  ON t.{frontToEnd.Item1}= j.{frontToEnd.Item2} ";
             return null;
         }
@@ -46,13 +50,14 @@ namespace _4_ORM.Core
             currentCommand += $" ORDER BY t.{field}  {order.ToString()} ";
             return this;
         }
-        public TEntity GetByID(int ID)
+        public DbSet<TEntity> Top(int number)
         {
-            return null;
+            currentCommand = string.Format(currentCommand, $" TOP {number} ");
+            return this;
         }
         public IEnumerable<TEntity> Excute()
         {
-            var clone = currentCommand;
+            var clone = string.Format(currentCommand,"");
             currentCommand = SqlQuery.selectSQL(table);
             return _dbManager.Query<TEntity>(clone, CommandType.Text);
            

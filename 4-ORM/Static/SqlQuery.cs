@@ -10,7 +10,8 @@ namespace _4_ORM.Static
     {
         public static string selectSQL(string tableName)
         {
-            return $"SELECT *   FROM {tableName} t  ";
+            return string.Format("SELECT {0} *   FROM {1} t", "{0}",tableName );
+            //return $"SELECT {0} *   FROM {tableName} t  ";
         }
         /**
 * <h1>Get INSERT SQL Query</h1>
